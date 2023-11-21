@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shopping List Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 50px;
+      border: 2px solid #c0c0c0;
+      box-shadow: 2px 3px 4px ;
+    }
+    label {
+      font-weight: bold;
+      margin-right: 10px;
+      border-radius: 2px solid #008080;
+     
+    }
+    input, select {
+      margin-bottom: 10px;
+      padding: 5px;
+      border: 3px solid #00ff40;
+    }
+    button {
+      padding: 10px;
+      cursor: pointer;
+      border: 2px solid #008080;
+    }
+    #productList {
+      text-align: left;
+      margin-top: 20px;
+      text-shadow: 1px 2px 3px ;
+    }
+    #result {
+      font-weight: bold;
+      margin-top: 20px;
+      text-shadow: 1px 2px 3px #0080ff;
+    }
+    h1{
+        text-shadow: 1px 1px 1px #000, -1px 1px 1px #000000;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Shopping List Calculator</h1>
+
+  <label for="productName">Product Name:</label>
+  <input type="text" id="productName" placeholder="Enter product name">
+  <label for="productPrice">Product Price:</label>
+  <input type="number" id="productPrice" placeholder="Enter product price">
+  <button onclick="addProduct()">Add Product</button>
+
+  <div id="productList"></div>
+
+  <button onclick="calculateTotal()">Calculate Total</button>
+
+  <div id="result"></div>
+
+  <script>
+    const products = [];
+
+    function addProduct() {
+      const productName = document.getElementById('productName').value.trim();
+      const productPrice = parseFloat(document.getElementById('productPrice').value);
+
+      if (productName === '' || isNaN(productPrice) || productPrice <= 0) {
+        alert('Please enter a valid product name and price.');
+        return;
+      }
+
+      products.push({ name: productName, price: productPrice });
+
+      displayProducts();
+      clearInputs();
+    }
+
+    function displayProducts() {
+      const productListDiv = document.getElementById('productList');
+      productListDiv.innerHTML = '';
+
+      for (const product of products) {
+        const productItem = document.createElement('div');
+        productItem.textContent = `${product.name}: $${product.price.toFixed(2)}`;
+        productListDiv.appendChild(productItem);
+      }
+    }
+
+    function clearInputs() {
+      document.getElementById('productName').value = '';
+      document.getElementById('productPrice').value = '';
+    }
+
+    function calculateTotal() {
+      const totalCost = products.reduce((total, product) => total + product.price, 0);
+      const resultElement = document.getElementById('result');
+      resultElement.textContent = `Total Cost: $${totalCost.toFixed(2)}`;
+    }
+  </script>
+
+</body>
+</html>
